@@ -1,4 +1,4 @@
-package io.hhplus.tdd.point;
+package io.hhplus.tdd.point.domain;
 
 public record PointHistory(
         long id,
@@ -7,4 +7,5 @@ public record PointHistory(
         TransactionType type,
         long updateMillis
 ) {
+
 }
