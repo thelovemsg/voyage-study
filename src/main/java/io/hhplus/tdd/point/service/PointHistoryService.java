@@ -15,7 +15,7 @@ public class PointHistoryService {
 
     private final PointHistoryTable pointHistoryTable;
 
-    //회원 포인트 정보 조회
+    //회원 포인트 정보 리스트 조회
     public List<PointHistory> findById(long userId) {
         return Optional.ofNullable(pointHistoryTable.selectAllByUserId(userId))
                 .orElseThrow(() -> new IllegalArgumentException("User Not Found"));
@@ -24,4 +24,5 @@ public class PointHistoryService {
     public void addPointHistory(long userId, int pointAmount, TransactionType type) {
         pointHistoryTable.insert(userId, pointAmount, type, System.currentTimeMillis());
     }
+    
 }

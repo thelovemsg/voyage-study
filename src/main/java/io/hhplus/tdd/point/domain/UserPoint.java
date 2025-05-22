@@ -10,7 +10,7 @@ public record UserPoint(
         return new UserPoint(id, 0, System.currentTimeMillis());
     }
 
-    public void isAmountEnoughToUse(int point) {
+    public void validate(long point) {
         if(this.point < point) throw new IllegalArgumentException("point is not enough");
     }
 }

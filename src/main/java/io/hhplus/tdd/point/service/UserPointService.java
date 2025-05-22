@@ -11,15 +11,15 @@ public class UserPointService {
 
     private final UserPointTable userPointTable;
 
-    public UserPoint savePoint(long userId, int pointAmount) {
+    public UserPoint savePoint(long userId, long pointAmount) {
         UserPoint foundUserPoint = userPointTable.selectById(userId);
         long newPointAmount = foundUserPoint.point() + pointAmount;
         return userPointTable.insertOrUpdate(userId, newPointAmount);
     }
 
-    public UserPoint usePoint(long userId, int pointAmount) {
+    public UserPoint usePoint(long userId, long pointAmount) {
         UserPoint foundUserPoint = userPointTable.selectById(userId);
-        foundUserPoint.isAmountEnoughToUse(pointAmount);
+        foundUserPoint.validate(pointAmount);
 
         long newPointAmount = foundUserPoint.point() - pointAmount;
         return userPointTable.insertOrUpdate(userId, newPointAmount);
