@@ -42,7 +42,7 @@ class PointControllerTest {
     @MockBean
     private PointHistoryService pointHistoryService;
 
-    @Mock
+    @MockBean
     private UserPointTable userPointTable;
 
     @Test
@@ -70,14 +70,14 @@ class PointControllerTest {
     public void 회원_포인트_충전_이력적재() throws Exception {
         //given
         long userId = 1l;
-        long saveAmount = 600l;
+        long saveAmount = 600;
         UserPoint userPoint = new UserPoint(userId, saveAmount, System.currentTimeMillis());
         when(userPointService.savePoint(userId, saveAmount)).thenReturn(userPoint);
 
         //when
         mockMvc.perform(patch("/point/{id}/charge", userId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("600"))
+                        .content(String.valueOf(saveAmount)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(userId))
                 .andExpect(jsonPath("$.point").value(saveAmount));
@@ -92,7 +92,8 @@ class PointControllerTest {
 
         //given
         long userId = 1l;
-        UserPoint userPoint = new UserPoint(userId, 100l, System.currentTimeMillis());
+        long originalPointAmount = 100l;
+        UserPoint userPoint = new UserPoint(userId, originalPointAmount, System.currentTimeMillis());
         when(userPointService.getUserPoint(userId)).thenReturn(userPoint);
 
         //when
